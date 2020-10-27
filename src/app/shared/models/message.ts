@@ -1,4 +1,7 @@
 export interface Message {
     success: boolean;
-    msg: string;
+    msg: {
+        token?: string;
+        payload: string;
+    };
 }

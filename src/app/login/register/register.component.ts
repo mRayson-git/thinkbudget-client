@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { User } from 'src/app/shared/models/user';
-import { AuthService } from 'src/app/shared/services/auth.service';
+import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
-  constructor(private fb: FormBuilder, private auth: AuthService, private router: Router) { }
+  constructor(private fb: FormBuilder, private user: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -28,13 +28,14 @@ export class RegisterComponent implements OnInit {
       email: this.registerForm.get('email').value,
       password: this.registerForm.get('password').value
     };
-    this.auth.registerUser(user).subscribe(data => {
-      if (data.success) {
-        this.router.navigate(['login']);
-      } else {
-        this.registerForm.reset();
-      }
-    });
+    this.user.registerUser(user).subscribe(
+      res => {
+        console.log(res);
+        localStorage.setItem('thinkbudget-token', res.token);
+        this.router.navigate(['/dashboard']);
+      },
+      err => console.log(err.error)
+    );
   }
 
 }

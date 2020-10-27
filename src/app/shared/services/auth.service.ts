@@ -1,18 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { catchError, mapTo, tap } from 'rxjs/operators';
 
-import { Message } from '../models/message';
-import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private readonly JWT_TOKEN = 'JWT_TOKEN';
+  private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
+
   userUrl = 'http://localhost:3000/api/v1/users/';
+  loggedUser: string;
   constructor(private http: HttpClient) { }
 
-  registerUser(user: User): Observable<Message> {
-    return this.http.post<Message>(this.userUrl + 'register', user);
-  }
 }
