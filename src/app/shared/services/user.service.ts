@@ -21,4 +21,9 @@ export class UserService {
   login(email: string, password: string): Observable<any> {
     return this.http.post<any>(this.userUrl + 'login', { email, password });
   }
+
+  // logout
+  logout(): void {
+    localStorage.removeItem('thinkbudget-token');
+  }
 }
