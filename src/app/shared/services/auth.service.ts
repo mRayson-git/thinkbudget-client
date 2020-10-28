@@ -15,4 +15,8 @@ export class AuthService {
     return !!localStorage.getItem('thinkbudget-token');
   }
 
+  getToken(): string {
+    return localStorage.getItem('thinkbudget-token');
+  }
+
 }
