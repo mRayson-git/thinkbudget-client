@@ -1,19 +1,49 @@
-<div class="container">
-    <form [formGroup]="registerForm" (ngSubmit)="register()">
-        <div class="form-group">
-            <label>Username:</label>          
-            <input type="text" class="form-control" formControlName="username">
+<div class="row justify-content-center my-5">
+    <div class="col-sm-12 col-md-6">
+        <h3 class="display-4 text-center text-success">Register</h3>
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-end my-0">
+                    <a routerLink="/login">Already have an account?</a>
+                </div>
+                <form [formGroup]="registerForm" (ngSubmit)="register()">
+                    <div class="form-group">
+                        <label>Username:</label>          
+                        <input type="text" class="form-control" formControlName="username"
+                        [ngClass]="{ 'is-valid': isFieldValid('username'), 'is-invalid': isFieldInvalid('username')}">
+                        <span class="invalid-feedback" *ngIf="isFieldInvalid('username')">Required.</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>          
+                        <input type="text" class="form-control" formControlName="email" id="email"
+                        [ngClass]="{ 'is-valid': isFieldValid('email'), 'is-invalid': isFieldInvalid('email')}">
+                        <span class="invalid-feedback" *ngIf="registerForm.get('email').errors?.required">Required.</span>
+                        <span class="invalid-feedback" *ngIf="registerForm.get('email').errors?.email">Must be a valid email.</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>          
+                        <input type="password" class="form-control" formControlName="password"
+                        [ngClass]="{ 'is-valid': isFieldValid('password'), 'is-invalid': isFieldInvalid('password')}">
+                        <span class="invalid-feedback" *ngIf="registerForm.get('password').errors?.required">Required.</span>
+                        <span class="invalid-feedback" *ngIf="registerForm.get('password').errors?.minlength">Must be at least 8 characters.</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password:</label>          
+                        <input type="password" class="form-control" formControlName="cpassword"
+                        [ngClass]="{ 'is-invalid': (registerForm.get('cpassword').touched || registerForm.get('cpassword').dirty) && registerForm.errors?.notMatching,
+                        'is-valid': (registerForm.get('cpassword').touched || registerForm.get('cpassword').dirty) && !registerForm.errors?.notMatching }">
+                        <span class="invalid-feedback" *ngIf="registerForm.get('cpassword').errors?.required">Required.</span>
+                        <span class="invalid-feedback" *ngIf="registerForm.errors?.notMatching">Passwords must match.</span>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-lg" [disabled]="!registerForm.valid">Register</button>
+                    </div>
+                    <div *ngIf="alert" class="alert alert-danger">
+                        {{ alert }}.
+                        <span><a routerLink="/login">Login?</a></span>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-            <label>Email:</label>          
-            <input type="text" class="form-control" formControlName="email">
-        </div>
-        <div class="form-group">
-            <label>Password:</label>          
-            <input type="password" class="form-control" formControlName="password">
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success btn-lg" [disabled]="!registerForm.valid">Register</button>
-        </div>
-    </form>    
+    </div>
 </div>

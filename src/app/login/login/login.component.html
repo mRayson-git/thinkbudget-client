@@ -1,15 +1,31 @@
-<div class="container">
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
-        <div class="form-group">
-            <label>Email:</label>          
-            <input type="text" class="form-control" formControlName="email">
+<div class="row justify-content-center my-5">
+    <div class="col-sm-12 col-md-6">
+        <h3 class="display-4 text-center text-success">Login</h3>
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-end my-0">
+                    <a routerLink="/register">Don't have an account?</a>
+                </div>
+                <form [formGroup]="loginForm" (ngSubmit)="login()">
+                    <div class="form-group">
+                        <label>Email:</label>          
+                        <input type="text" class="form-control" formControlName="email"
+                        [ngClass]="{ 'is-valid': isFieldValid('email'), 'is-invalid': isFieldInvalid('email')}">
+                        <span class="invalid-feedback" *ngIf="loginForm.get('email').errors?.email">Must be a valid email.</span>
+                    </div>
+                    <div class="form-group">
+                        <label>Password:</label>          
+                        <input type="password" class="form-control" formControlName="password"
+                        [ngClass]="{ 'is-valid': isFieldValid('password'), 'is-invalid': isFieldInvalid('password')}">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-lg" [disabled]="!loginForm.valid">Login</button>
+                    </div>
+                    <div *ngIf="alert" class="alert alert-danger">
+                        {{ alert }}.
+                    </div>
+                </form>    
+            </div>
         </div>
-        <div class="form-group">
-            <label>Password:</label>          
-            <input type="password" class="form-control" formControlName="password">
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success btn-lg" [disabled]="!loginForm.valid">Login</button>
-        </div>
-    </form>    
+    </div>
 </div>

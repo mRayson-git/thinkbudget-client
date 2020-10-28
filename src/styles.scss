@@ -2,3 +2,10 @@
 
 
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+html {
+    height: 100%;
+}
+body {
+    min-height: 100%;
+}

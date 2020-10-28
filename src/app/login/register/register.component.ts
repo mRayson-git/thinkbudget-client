@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { User } from 'src/app/shared/models/user';
 import { UserService } from 'src/app/shared/services/user.service';
+import { matchingValidator } from 'src/app/shared/validators/matching.validator';
+
 
 @Component({
   selector: 'app-register',
@@ -12,30 +14,44 @@ import { UserService } from 'src/app/shared/services/user.service';
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
+  alert = '';
   constructor(private fb: FormBuilder, private user: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
       username: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required]
-    });
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      cpassword: ['', [Validators.required]]
+    }, { validators: matchingValidator });
   }
 
   register(): void {
     const user: User = {
       username: this.registerForm.get('username').value,
-      email: this.registerForm.get('email').value,
+      email: this.registerForm.get('email').value.toLowerCase(),
       password: this.registerForm.get('password').value
     };
     this.user.registerUser(user).subscribe(
       res => {
-        console.log(res);
-        localStorage.setItem('thinkbudget-token', res.token);
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/login']);
       },
-      err => console.log(err.error)
+      err => {
+        this.registerForm.get('email').reset();
+        console.log(err);
+        this.alert = err.error;
+        setTimeout(() => {
+          this.alert = null;
+        }, 3000);
+      }
     );
+  }
+
+  isFieldValid(fieldName: string): boolean {
+    return (this.registerForm.get(fieldName).touched || this.registerForm.get(fieldName).dirty) && this.registerForm.get(fieldName).valid;
+  }
+  isFieldInvalid(fieldName: string): boolean {
+    return (this.registerForm.get(fieldName).touched || this.registerForm.get(fieldName).dirty) && !this.registerForm.get(fieldName).valid;
   }
 
 }

@@ -8,12 +8,14 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginModule } from './login/login.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TokenInterceptorService } from './shared/services/token-interceptor.service';
+import { HomepageComponent } from './components/homepage/homepage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    DashboardComponent
+    DashboardComponent,
+    HomepageComponent
   ],
   imports: [
     BrowserModule,
