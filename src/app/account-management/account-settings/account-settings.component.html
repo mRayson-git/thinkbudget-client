@@ -1,0 +1,32 @@
+<div class="card">
+    <div class="card-header">
+        <h3>General</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <label>Username:</label>
+                <input type="text" class="form-control" [placeholder]="currUser.username">
+            </div>
+        </div>
+        <div class="row my-3">
+            <div class="col-sm-12 col-md-6">
+                <label>Email:</label>
+                <input type="text" class="form-control" [placeholder]="currUser.email">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <label>Password:</label>
+                    <input type="password" class="form-control" placeholder="******">
+            </div>
+        </div>
+        <div class="mt-3">
+            <p>Your current parsing profiles are:</p>
+            <ul>
+                <li *ngFor="let profile of parserProfiles"><a routerLink="/profilesettings/{{ profile.accountName }}">{{ profile.accountName }}</a></li>
+            </ul>
+            <button class="btn btn-primary" routerLink="/parsercreation">Add a new profile</button>
+        </div>
+    </div>
+</div>
