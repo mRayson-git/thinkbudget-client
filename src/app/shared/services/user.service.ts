@@ -25,11 +25,17 @@ export class UserService {
   // logout
   logout(): void {
     localStorage.removeItem('thinkbudget-token');
+    localStorage.removeItem('thinkbudget-user');
     this.router.navigate(['/login']);
   }
 
   // get all users
   getUsers(): Observable<any> {
     return this.http.get(this.userUrl);
+  }
+
+  // get current user
+  getCurrUser(): User {
+    return JSON.parse(localStorage.getItem('thinkbudget-user'));
   }
 }

@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
         res => {
           console.log(res);
           localStorage.setItem('thinkbudget-token', res.token);
-          localStorage.setItem('thinkbudget-user', res.user);
+          localStorage.setItem('thinkbudget-user', JSON.stringify(res.user));
           this.router.navigate(['/dashboard']);
         },
         err => {

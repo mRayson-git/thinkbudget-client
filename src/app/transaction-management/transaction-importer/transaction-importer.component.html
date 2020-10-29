@@ -1,0 +1,28 @@
+<div class="card">
+    <div class="card-header">
+        Import transactions from a csv file:
+    </div>
+    <div class="card-body">
+        <form [formGroup]="csvForm">
+            <div class="row mb-3">
+                <div class="col-sm-12 col-md-8">
+                    <select name="parser" id="parser" class="form-control" formControlName="parser">
+                        <option value="" class="text-muted">Choose a parser</option>
+                        <option value="1">ScotiaChecking Parser</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-8">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="customFile" accept=".csv" (change)="fileSelected($event.target.files)" [disabled]="csvForm.get('parser').value === ''">
+                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div *ngIf="alert" class="mt-3 mb-0 alert alert-success">
+            {{ alert }}
+        </div>
+    </div>
+</div>
