@@ -5,13 +5,15 @@ import { NgxCsvParserModule } from 'ngx-csv-parser';
 import { SharedModule } from '../shared/shared.module';
 import { TransactionManagementComponent } from './transaction-management.component';
 import { TransactionImporterComponent } from './transaction-importer/transaction-importer.component';
+import { TransactionListComponent } from './transaction-list/transaction-list.component';
 
 
 
 @NgModule({
   declarations: [
     TransactionManagementComponent,
-    TransactionImporterComponent
+    TransactionImporterComponent,
+    TransactionListComponent
   ],
   imports: [
     CommonModule,

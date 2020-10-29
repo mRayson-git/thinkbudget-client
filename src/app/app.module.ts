@@ -10,6 +10,7 @@ import { TransactionManagementModule } from './transaction-management/transactio
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TokenInterceptorService } from './shared/services/token-interceptor.service';
 import { HomepageComponent } from './components/homepage/homepage.component';
+import { AccountManagementModule } from './account-management/account-management.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HomepageComponent } from './components/homepage/homepage.component';
     BrowserModule,
     AppRoutingModule,
     LoginModule,
-    TransactionManagementModule
+    TransactionManagementModule,
+    AccountManagementModule
   ],
   providers: [
     {

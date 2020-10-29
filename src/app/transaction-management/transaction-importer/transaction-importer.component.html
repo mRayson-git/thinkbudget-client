@@ -5,15 +5,15 @@
     <div class="card-body">
         <form [formGroup]="csvForm">
             <div class="row mb-3">
-                <div class="col-sm-12 col-md-8">
-                    <select name="parser" id="parser" class="form-control" formControlName="parser">
+                <div class="col-sm-12">
+                    <select name="parser" id="parser" class="form-control" formControlName="parser" (focus)="updateProfiles()">
                         <option value="" class="text-muted">Choose a parser</option>
-                        <option value="1">ScotiaChecking Parser</option>
+                        <option *ngFor="let profile of parserProfiles; let i = index" [value]="i">{{ profile.accountName }}</option>
                     </select>
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12 col-md-8">
+                <div class="col-sm-12">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="customFile" accept=".csv" (change)="fileSelected($event.target.files)" [disabled]="csvForm.get('parser').value === ''">
                         <label class="custom-file-label" for="customFile">Choose file</label>
