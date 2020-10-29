@@ -5,6 +5,7 @@ import { ParserProfile } from 'src/app/shared/models/parserProfile';
 import { Transaction } from 'src/app/shared/models/transaction';
 import { User } from 'src/app/shared/models/user';
 import { ParserService } from 'src/app/shared/services/parser.service';
+import { TransactionService } from 'src/app/shared/services/transaction.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
 
@@ -25,7 +26,8 @@ export class TransactionImporterComponent implements OnInit {
     private fb: FormBuilder,
     private ngxParser: NgxCsvParser,
     private parserService: ParserService,
-    private userService: UserService
+    private userService: UserService,
+    private transactionService: TransactionService
     ) { }
 
   ngOnInit(): void {
@@ -41,6 +43,7 @@ export class TransactionImporterComponent implements OnInit {
     );
     this.csvForm = this.fb.group({
       parser: ['', Validators.required],
+      file: ['']
     });
   }
 
@@ -49,8 +52,12 @@ export class TransactionImporterComponent implements OnInit {
     const selectedProfile = this.parserProfiles[this.csvForm.get('parser').value];
     const transactions: Transaction[] = [];
 
-    this.ngxParser.parse(this.fileToParse, { header: selectedProfile.header, delimiter: ',' })
+    this.ngxParser.parse(this.fileToParse, { header: false, delimiter: ',' })
     .pipe().subscribe((result: Array<any>) => {
+      // If there is a header, remove first entry
+      if (selectedProfile.header){
+        result.shift();
+      }
       result.forEach(transaction => {
         transactions.push({
           userEmail: this.currUser.email,
@@ -59,11 +66,13 @@ export class TransactionImporterComponent implements OnInit {
           amount: transaction[selectedProfile.amountCol],
           payee: transaction[selectedProfile.payeeCol],
           type: transaction[selectedProfile.typeCol],
+          description: '',
+          category: 'Uncategorized'
         });
       });
-      console.log(transactions);
+      this.transactionService.saveTransactions(this.currUser.email, transactions).subscribe();
     });
-
+    this.csvForm.get('file').reset();
     // set alert
     this.alert = this.fileToParse.name + ' has been selected.';
     setTimeout(() => {
@@ -82,5 +91,4 @@ export class TransactionImporterComponent implements OnInit {
       }
     );
   }
-
 }
