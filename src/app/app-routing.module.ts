@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AccountManagementComponent } from './account-management/account-management.component';
-import { ParserCreatorComponent } from './account-management/parser-creator/parser-creator.component';
+import { AccountManagementComponent } from './modules/account-management/account-management.component';
+import { ParserCreatorComponent } from './modules/account-management/parser-creator/parser-creator.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HomepageComponent } from './components/homepage/homepage.component';
-import { LoginComponent } from './login/login/login.component';
-import { RegisterComponent } from './login/register/register.component';
-import { AuthGuard } from './shared/guards/auth.guard';
-import { TransactionManagementComponent } from './transaction-management/transaction-management.component';
+import { LoginComponent } from './modules/login/login/login.component';
+import { RegisterComponent } from './modules/login/register/register.component';
+import { AuthGuard } from './modules/shared/guards/auth.guard';
+import { TransactionManagementComponent } from './modules/transaction-management/transaction-management.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
