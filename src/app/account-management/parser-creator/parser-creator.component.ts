@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ParserProfile } from 'src/app/shared/models/parserProfile';
 import { User } from 'src/app/shared/models/user';
 import { ParserService } from 'src/app/shared/services/parser.service';
-import { UserService } from 'src/app/shared/services/user.service';
+import { UserService } from 'src/app/login/user.service';
 
 @Component({
   selector: 'app-parser-creator',

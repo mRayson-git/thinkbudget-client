@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { from, Observable, of, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Transaction } from '../models/transaction';
+import { Transaction } from 'src/app/shared/models/transaction';
 
 @Injectable({
   providedIn: 'root'

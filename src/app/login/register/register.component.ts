@@ -1,9 +1,9 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { User } from 'src/app/shared/models/user';
-import { UserService } from 'src/app/shared/services/user.service';
+import { UserService } from 'src/app/login/user.service';
 import { matchingValidator } from 'src/app/shared/validators/matching.validator';
 
 

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/shared/models/user';
-import { UserService } from 'src/app/shared/services/user.service';
+import { UserService } from 'src/app/login/user.service';
 
 @Component({
   selector: 'app-dashboard',

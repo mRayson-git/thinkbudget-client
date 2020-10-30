@@ -4,9 +4,9 @@ import { NgxCsvParser } from 'ngx-csv-parser';
 import { ParserProfile } from 'src/app/shared/models/parserProfile';
 import { Transaction } from 'src/app/shared/models/transaction';
 import { User } from 'src/app/shared/models/user';
-import { ParserService } from 'src/app/shared/services/parser.service';
-import { TransactionService } from 'src/app/shared/services/transaction.service';
-import { UserService } from 'src/app/shared/services/user.service';
+import { ParserService } from 'src/app/login/parser.service';
+import { TransactionService } from '../transaction.service';
+import { UserService } from 'src/app/login/user.service';
 
 
 

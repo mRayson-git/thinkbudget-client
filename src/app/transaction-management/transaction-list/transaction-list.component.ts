@@ -5,8 +5,8 @@ import { Observable, Observer } from 'rxjs';
 
 import { Transaction } from 'src/app/shared/models/transaction';
 import { User } from 'src/app/shared/models/user';
-import { TransactionService } from 'src/app/shared/services/transaction.service';
-import { UserService } from 'src/app/shared/services/user.service';
+import { TransactionService } from '../transaction.service';
+import { UserService } from 'src/app/login/user.service';
 import { ModalRecordComponent } from '../modal-record/modal-record.component';
 
 @Component({
