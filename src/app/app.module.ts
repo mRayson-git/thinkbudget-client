@@ -11,6 +11,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TokenInterceptorService } from './shared/services/token-interceptor.service';
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { AccountManagementModule } from './account-management/account-management.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AccountManagementModule } from './account-management/account-management
     AppRoutingModule,
     LoginModule,
     TransactionManagementModule,
-    AccountManagementModule
+    AccountManagementModule,
+    NgbModule
   ],
   providers: [
     {

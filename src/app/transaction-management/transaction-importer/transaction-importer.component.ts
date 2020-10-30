@@ -64,7 +64,7 @@ export class TransactionImporterComponent implements OnInit {
           accountName: selectedProfile.accountName,
           date: transaction[selectedProfile.dateCol],
           amount: transaction[selectedProfile.amountCol],
-          payee: transaction[selectedProfile.payeeCol],
+          payee: transaction[selectedProfile.payeeCol] || '???',
           type: transaction[selectedProfile.typeCol],
           description: '',
           category: 'Uncategorized'

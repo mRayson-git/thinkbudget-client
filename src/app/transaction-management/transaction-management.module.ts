@@ -6,6 +6,7 @@ import { SharedModule } from '../shared/shared.module';
 import { TransactionManagementComponent } from './transaction-management.component';
 import { TransactionImporterComponent } from './transaction-importer/transaction-importer.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
+import { ModalRecordComponent } from './modal-record/modal-record.component';
 
 
 
@@ -13,7 +14,8 @@ import { TransactionListComponent } from './transaction-list/transaction-list.co
   declarations: [
     TransactionManagementComponent,
     TransactionImporterComponent,
-    TransactionListComponent
+    TransactionListComponent,
+    ModalRecordComponent
   ],
   imports: [
     CommonModule,

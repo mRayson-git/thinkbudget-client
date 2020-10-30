@@ -13,4 +13,8 @@ export class TransactionService {
   saveTransactions(userEmail: string, transactions: Transaction[]): Observable<any> {
     return this.http.post(this.baseUrl + userEmail, transactions);
   }
+
+  getAllTransactions(userEmail: string): Observable<any> {
+    return this.http.get(this.baseUrl + userEmail);
+  }
 }
