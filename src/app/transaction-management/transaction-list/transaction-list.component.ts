@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Observable } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, Observer } from 'rxjs';
 
 import { Transaction } from 'src/app/shared/models/transaction';
 import { User } from 'src/app/shared/models/user';
@@ -17,15 +16,8 @@ import { ModalRecordComponent } from '../modal-record/modal-record.component';
 })
 export class TransactionListComponent implements OnInit {
   currUser: User;
-  transList: Transaction[] = [];
+  transList$: Observable<Transaction[]>;
   filter: FormGroup;
-  transListObs: Observable<Transaction[]>;
-
-  // Filter things
-  accountNames: string[] = [];
-  payees: string[] = [];
-  types: string[] = [];
-  categories: string[] = [];
 
   constructor(
     private userService: UserService,
@@ -43,16 +35,7 @@ export class TransactionListComponent implements OnInit {
       type: [''],
       category: ['']
     });
-    this.transListObs = this.transactionService.getAllTransactions(this.currUser.email);
-    this.transListObs
-    .subscribe(
-      res => {
-        this.transList = res;
-      },
-      err => {
-        console.log(err);
-      }
-    );
+    this.transactionService.updateTransactions(this.currUser.email);
   }
 
   showModal(transaction: Transaction): void {
@@ -60,21 +43,7 @@ export class TransactionListComponent implements OnInit {
     modalRef.componentInstance.transaction = transaction;
   }
 
-  filterOnAccount(accountName: string): void {
-    this.transListObs.pipe(
-      map(transactions => transactions.filter(transaction => transaction.accountName === accountName))
-    ).subscribe(transactions => {
-      this.transList = transactions;
-    });
+  get transactions(): Observable<Transaction[]> {
+    return this.transactionService.transactions$;
   }
-
-  filterOnPayee(payee: string): void {
-    this.transListObs.pipe(
-      map(transactions => transactions.filter(transaction => transaction.payee.includes(payee)))
-    ).subscribe(transactions => {
-      this.transList = transactions;
-    });
-  }
-
-
 }

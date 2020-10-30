@@ -70,25 +70,8 @@ export class TransactionImporterComponent implements OnInit {
           category: 'Uncategorized'
         });
       });
-      this.transactionService.saveTransactions(this.currUser.email, transactions).subscribe();
+      this.transactionService.saveTransactions(this.currUser.email, transactions);
     });
     this.csvForm.get('file').reset();
-    // set alert
-    this.alert = this.fileToParse.name + ' has been selected.';
-    setTimeout(() => {
-      this.alert = null;
-    }, 3000);
-  }
-
-  updateProfiles(): void {
-    this.parserService.getProfiles(this.currUser.email)
-    .subscribe(
-      res => {
-        this.parserProfiles = res;
-      },
-      err => {
-        console.log(err.error);
-      }
-    );
   }
 }

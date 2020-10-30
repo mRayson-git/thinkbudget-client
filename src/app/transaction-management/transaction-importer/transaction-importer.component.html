@@ -1,12 +1,12 @@
 <div class="card">
-    <div class="card-header bg-success">
+    <div class="card-header">
         <h4>Import</h4>
     </div>
     <div class="card-body">
         <form [formGroup]="csvForm">
             <div class="row mb-3">
                 <div class="col-sm-12">
-                    <select name="parser" id="parser" class="form-control" formControlName="parser" (focus)="updateProfiles()">
+                    <select name="parser" id="parser" class="form-control" formControlName="parser">
                         <option value="" class="text-muted">Choose a parser</option>
                         <option *ngFor="let profile of parserProfiles; let i = index" [value]="i">{{ profile.accountName }}</option>
                     </select>
