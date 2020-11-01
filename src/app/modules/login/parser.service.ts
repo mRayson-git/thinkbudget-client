@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { ParserProfile } from '../models/parserProfile';
-
+import { ParserProfile } from '../shared/models/parserProfile';
 @Injectable({
   providedIn: 'root'
 })

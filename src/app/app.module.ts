@@ -5,12 +5,12 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { LoginModule } from './login/login.module';
-import { TransactionManagementModule } from './transaction-management/transaction-management.module';
+import { LoginModule } from './modules/login/login.module';
+import { TransactionManagementModule } from './modules/transaction-management/transaction-management.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { TokenInterceptorService } from './shared/services/token-interceptor.service';
+import { TokenInterceptorService } from './modules/shared/services/token-interceptor.service';
 import { HomepageComponent } from './components/homepage/homepage.component';
-import { AccountManagementModule } from './account-management/account-management.module';
+import { AccountManagementModule } from './modules/account-management/account-management.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({

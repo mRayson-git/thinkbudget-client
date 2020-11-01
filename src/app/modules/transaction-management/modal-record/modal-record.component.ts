@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Transaction } from 'src/app/shared/models/transaction';
+import { Transaction } from 'src/app/modules/shared/models/transaction';
 
 @Component({
   selector: 'app-modal-record',

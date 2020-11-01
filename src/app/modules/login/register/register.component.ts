@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { User } from 'src/app/shared/models/user';
-import { UserService } from 'src/app/login/user.service';
-import { matchingValidator } from 'src/app/shared/validators/matching.validator';
+import { User } from 'src/app/modules/shared/models/user';
+import { UserService } from 'src/app/modules/login/user.service';
+import { matchingValidator } from 'src/app/modules/shared/validators/matching.validator';
 
 
 @Component({

@@ -3,11 +3,12 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, Observer } from 'rxjs';
 
-import { Transaction } from 'src/app/shared/models/transaction';
-import { User } from 'src/app/shared/models/user';
+import { Transaction } from 'src/app/modules/shared/models/transaction';
+import { User } from 'src/app/modules/shared/models/user';
 import { TransactionService } from '../transaction.service';
-import { UserService } from 'src/app/login/user.service';
+import { UserService } from 'src/app/modules/login/user.service';
 import { ModalRecordComponent } from '../modal-record/modal-record.component';
+import { skip } from 'rxjs/operators';
 
 @Component({
   selector: 'app-transaction-list',
@@ -16,7 +17,7 @@ import { ModalRecordComponent } from '../modal-record/modal-record.component';
 })
 export class TransactionListComponent implements OnInit {
   currUser: User;
-  transList$: Observable<Transaction[]>;
+  transactions: Transaction[] = [];
   filter: FormGroup;
 
   constructor(
@@ -35,15 +36,15 @@ export class TransactionListComponent implements OnInit {
       type: [''],
       category: ['']
     });
-    this.transactionService.updateTransactions(this.currUser.email);
+    this.transactionService.getTransactions(this.currUser.email);
+    this.transactionService.transactions$.pipe(skip(1)).subscribe(transactions => {
+      console.log('Subscribing to transaction stream');
+      this.transactions = transactions;
+    });
   }
 
   showModal(transaction: Transaction): void {
     const modalRef = this.modalService.open(ModalRecordComponent);
     modalRef.componentInstance.transaction = transaction;
-  }
-
-  get transactions(): Observable<Transaction[]> {
-    return this.transactionService.transactions$;
   }
 }

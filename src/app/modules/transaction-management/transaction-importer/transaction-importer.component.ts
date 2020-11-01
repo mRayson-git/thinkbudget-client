@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxCsvParser } from 'ngx-csv-parser';
-import { ParserProfile } from 'src/app/shared/models/parserProfile';
-import { Transaction } from 'src/app/shared/models/transaction';
-import { User } from 'src/app/shared/models/user';
-import { ParserService } from 'src/app/login/parser.service';
+import { ParserProfile } from 'src/app/modules/shared/models/parserProfile';
+import { Transaction } from 'src/app/modules/shared/models/transaction';
+import { User } from 'src/app/modules/shared/models/user';
+import { ParserService } from 'src/app/modules/login/parser.service';
 import { TransactionService } from '../transaction.service';
-import { UserService } from 'src/app/login/user.service';
+import { UserService } from 'src/app/modules/login/user.service';
 
 
 

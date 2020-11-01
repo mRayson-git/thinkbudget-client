@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { from, Observable, of, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Transaction } from 'src/app/modules/shared/models/transaction';
 
@@ -9,25 +9,43 @@ import { Transaction } from 'src/app/modules/shared/models/transaction';
 })
 export class TransactionService {
   baseUrl = 'http://localhost:3000/api/v1/transactions/';
-
-  transactions$: Observable<any>;
+  initTransaction: Transaction = {
+    userEmail: 'Test',
+    accountName: 'Test',
+    amount: 'Test',
+    payee: 'Test',
+    date: 'Test',
+    type: 'Test'
+  };
+  private transactionSource = new BehaviorSubject<Transaction[]>([this.initTransaction]);
+  transactions$ = this.transactionSource.asObservable();
 
   constructor(private http: HttpClient) { }
 
+  // Save transactions and update observable
   saveTransactions(userEmail: string, transactions: Transaction[]): void{
-    this.http.post(this.baseUrl + userEmail, transactions).subscribe();
-    // find better way
-    setTimeout(() => {
-      this.updateTransactions(userEmail);
-    }, 1000);
+    this.http.post<Transaction[]>(this.baseUrl + userEmail, transactions).subscribe(
+      result => {
+        console.log('What was returned by the server:');
+        console.log(result);
+        this.transactionSource.next(result);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
-  updateTransactions(userEmail: string): void {
-    console.log('Updating the transaction stream');
-    this.transactions$ = this.http.get<Transaction[]>(this.baseUrl + userEmail);
-  }
-
-  getTransactions(): Observable<Transaction[]> {
-    return this.transactions$;
+  getTransactions(userEmail: string): void {
+    this.http.get<Transaction[]>(this.baseUrl + userEmail).pipe(
+      tap(result => console.log(result))
+    ).subscribe(
+      result => {
+        this.transactionSource.next(result);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 }
