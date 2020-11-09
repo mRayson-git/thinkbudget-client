@@ -12,6 +12,7 @@ import { TokenInterceptorService } from './modules/shared/services/token-interce
 import { HomepageComponent } from './components/homepage/homepage.component';
 import { AccountManagementModule } from './modules/account-management/account-management.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BudgetManagementModule } from './modules/budget-management/budget-management.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     LoginModule,
     TransactionManagementModule,
     AccountManagementModule,
+    BudgetManagementModule,
     NgbModule
   ],
   providers: [

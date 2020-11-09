@@ -22,7 +22,7 @@
                     <tr *ngFor="let trans of transactions" (click)="showModal(trans)">
                         <td>{{ trans.accountName }}</td>
                         <td>{{ trans.date | date }}</td>
-                        <td>{{ trans.amount | currency }}</td>
+                        <td class="text-right">{{ trans.amount | currency }}</td>
                         <td>{{ trans.payee }}</td>
                         <td>{{ trans.type }}</td>
                         <td>{{ trans.category }}</td>

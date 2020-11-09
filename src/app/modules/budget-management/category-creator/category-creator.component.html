@@ -1,0 +1,9 @@
+<h1 class="display-4">Category</h1>
+<p class="text-muted">Create your categories here.</p>
+
+<form [formGroup]="categoryForm">
+    <div class="form-group">
+        <input type="text" class="form-control form-control-lg" formControlName="categoryName" placeholder="Category name...">
+    </div>
+    <button type="submit" class="btn btn-success btn-block btn-lg">Save Category</button>
+</form>

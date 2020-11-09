@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, from, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Transaction } from 'src/app/modules/shared/models/transaction';
 
 @Injectable({
