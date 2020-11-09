@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h4 class="modal-title">Recently Added</h4>
+</div>
+<div class="modal-body">
+    <div *ngIf="recentlyAdded.length === 0;else results" class="alert alert-warning">
+        There is no recent activity.
+    </div>
+    <ng-template #results>
+        <ul>
+            <li *ngFor="let transaction of recentlyAdded">{{ transaction.accountName}} on {{ transaction.date | date }} for {{ transaction.amount | currency }}</li>
+        </ul>
+    </ng-template>
+</div>

@@ -7,6 +7,10 @@ import { User } from 'src/app/modules/shared/models/user';
 import { ParserService } from 'src/app/modules/login/parser.service';
 import { TransactionService } from '../transaction.service';
 import { UserService } from 'src/app/modules/login/user.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ModalRecentlyAddedComponent } from '../modal-recently-added/modal-recently-added.component';
+import { skip } from 'rxjs/operators';
+import { ModalAddTransactionComponent } from '../modal-add-transaction/modal-add-transaction.component';
 
 
 
@@ -21,13 +25,15 @@ export class TransactionImporterComponent implements OnInit {
   fileToParse: File = null;
   parserProfiles: ParserProfile[] = [];
   currUser: User;
+  transactions: Transaction[] = [];
 
   constructor(
     private fb: FormBuilder,
     private ngxParser: NgxCsvParser,
     private parserService: ParserService,
     private userService: UserService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private modalService: NgbModal
     ) { }
 
   ngOnInit(): void {
@@ -45,6 +51,12 @@ export class TransactionImporterComponent implements OnInit {
       parser: ['', Validators.required],
       file: ['']
     });
+    // get recently added transactions
+    this.transactionService.recentlyAddedTransactions$.pipe(skip(1)).subscribe(
+      transaction => {
+        this.transactions.push(transaction);
+      }
+    );
   }
 
   fileSelected(files: FileList): void {
@@ -73,5 +85,16 @@ export class TransactionImporterComponent implements OnInit {
       this.transactionService.saveTransactions(this.currUser.email, transactions);
     });
     this.csvForm.get('file').reset();
+  }
+
+  // modal for seeing recently added transactions
+  showRecentlyAddedModal(): void {
+    const modalRef = this.modalService.open(ModalRecentlyAddedComponent);
+    modalRef.componentInstance.recentlyAdded = this.transactions;
+  }
+
+  // modal for adding custom transaction
+  showCustomTransactionModal(): void {
+    const modalRef = this.modalService.open(ModalAddTransactionComponent);
   }
 }

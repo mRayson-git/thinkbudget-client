@@ -7,6 +7,9 @@ import { TransactionManagementComponent } from './transaction-management.compone
 import { TransactionImporterComponent } from './transaction-importer/transaction-importer.component';
 import { TransactionListComponent } from './transaction-list/transaction-list.component';
 import { ModalRecordComponent } from './modal-record/modal-record.component';
+import { ModalRecentlyAddedComponent } from './modal-recently-added/modal-recently-added.component';
+import { ModalAddTransactionComponent } from './modal-add-transaction/modal-add-transaction.component';
+import { CategorySetterComponent } from './category-setter/category-setter.component';
 
 
 
@@ -15,7 +18,10 @@ import { ModalRecordComponent } from './modal-record/modal-record.component';
     TransactionManagementComponent,
     TransactionImporterComponent,
     TransactionListComponent,
-    ModalRecordComponent
+    ModalRecordComponent,
+    ModalRecentlyAddedComponent,
+    ModalAddTransactionComponent,
+    CategorySetterComponent
   ],
   imports: [
     CommonModule,

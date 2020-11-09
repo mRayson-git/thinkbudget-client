@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, from, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Transaction } from 'src/app/modules/shared/models/transaction';
 
@@ -17,34 +17,39 @@ export class TransactionService {
     date: 'Test',
     type: 'Test'
   };
-  private transactionSource = new BehaviorSubject<Transaction[]>([this.initTransaction]);
+  private transactionSource = new Subject<Transaction>();
   transactions$ = this.transactionSource.asObservable();
+
+  private recentlyAdded = new BehaviorSubject<Transaction>(this.initTransaction);
+  recentlyAddedTransactions$ = this.recentlyAdded.asObservable();
 
   constructor(private http: HttpClient) { }
 
   // Save transactions and update observable
   saveTransactions(userEmail: string, transactions: Transaction[]): void{
+    // returning array of new transactions added
     this.http.post<Transaction[]>(this.baseUrl + userEmail, transactions).subscribe(
-      result => {
-        console.log('What was returned by the server:');
-        console.log(result);
-        this.transactionSource.next(result);
+      newTransactions => {
+        newTransactions.forEach(transaction => {
+          console.log('Adding transaction to recently added stream');
+          this.recentlyAdded.next(transaction);
+        });
       },
       err => {
-        console.log(err);
+        console.error(err);
       }
     );
   }
 
   getTransactions(userEmail: string): void {
-    this.http.get<Transaction[]>(this.baseUrl + userEmail).pipe(
-      tap(result => console.log(result))
-    ).subscribe(
-      result => {
-        this.transactionSource.next(result);
+    this.http.get<Transaction[]>(this.baseUrl + userEmail).subscribe(
+      transactions => {
+        transactions.forEach(transaction => {
+          this.transactionSource.next(transaction);
+        });
       },
       err => {
-        console.log(err);
+        console.error(err);
       }
     );
   }

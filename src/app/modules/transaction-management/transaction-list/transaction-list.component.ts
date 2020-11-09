@@ -8,7 +8,6 @@ import { User } from 'src/app/modules/shared/models/user';
 import { TransactionService } from '../transaction.service';
 import { UserService } from 'src/app/modules/login/user.service';
 import { ModalRecordComponent } from '../modal-record/modal-record.component';
-import { skip } from 'rxjs/operators';
 
 @Component({
   selector: 'app-transaction-list',
@@ -36,15 +35,18 @@ export class TransactionListComponent implements OnInit {
       type: [''],
       category: ['']
     });
-    this.transactionService.getTransactions(this.currUser.email);
-    this.transactionService.transactions$.pipe(skip(1)).subscribe(transactions => {
-      console.log('Subscribing to transaction stream');
-      this.transactions = transactions;
+    console.log('Subscribing to transaction stream');
+    this.transactionService.transactions$.subscribe(transaction => {
+      this.transactions.push(transaction);
     });
+    this.transactionService.getTransactions(this.currUser.email);
   }
 
   showModal(transaction: Transaction): void {
     const modalRef = this.modalService.open(ModalRecordComponent);
     modalRef.componentInstance.transaction = transaction;
+  }
+
+  sortOnCategory(): void {
   }
 }

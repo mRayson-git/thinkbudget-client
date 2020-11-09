@@ -1,6 +1,9 @@
-<div class="mt-3 card">
+<div class="card mt-3">
     <div class="card-header">
-        <h4 class="text-center">Transaction Summary:</h4>
+        <div class="d-flex row justify-content-between px-3">
+            <h4>All Transactions</h4>
+            <a routerLink="setcategories">Set categories</a>
+        </div>
     </div>
     <div class="card-body">
         <div *ngIf="transactions">

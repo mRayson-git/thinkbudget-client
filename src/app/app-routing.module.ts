@@ -8,6 +8,7 @@ import { LoginComponent } from './modules/login/login/login.component';
 import { RegisterComponent } from './modules/login/register/register.component';
 import { AuthGuard } from './modules/shared/guards/auth.guard';
 import { TransactionManagementComponent } from './modules/transaction-management/transaction-management.component';
+import { CategorySetterComponent } from './modules/transaction-management/category-setter/category-setter.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'accountsettings', component: AccountManagementComponent, canActivate: [AuthGuard] },
   { path: 'profilesettings/:accountName', component: DashboardComponent, canActivate: [AuthGuard] },
   { path: 'parsercreation', component: ParserCreatorComponent, canActivate: [AuthGuard] },
+  { path: 'transactions/setcategories', component: CategorySetterComponent, canActivate: [AuthGuard] },
   { path: '', component: HomepageComponent }
 ];
 
