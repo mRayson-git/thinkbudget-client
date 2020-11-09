@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginModule } from './modules/login/login.module';
-import { TransactionManagementModule } from './modules/transaction-management/transaction-management.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { TokenInterceptorService } from './modules/shared/services/token-interceptor.service';
 import { HomepageComponent } from './components/homepage/homepage.component';
@@ -24,7 +23,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     AppRoutingModule,
     LoginModule,
-    TransactionManagementModule,
     AccountManagementModule,
     NgbModule
   ],
