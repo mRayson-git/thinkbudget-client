@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../login/user.service';
 import { Budget } from '../../shared/models/budget';
 import { User } from '../../shared/models/user';
@@ -24,15 +24,35 @@ export class BudgetCreatorComponent implements OnInit {
   ngOnInit(): void {
     this.user = this.userService.getCurrUser();
     this.budgetForm = this.fb.group({
-      categoryName: '',
-      amount: '',
-      colour: ''
+      categoryName: ['', Validators.required],
+      amount: ['', Validators.required],
+      colour: ['#00008B', Validators.required]
     });
-    this.budget = { userEmail: this.user.email };
+    this.budgetService.getBudget(this.user.email).subscribe(
+      // if budget exists
+      budget => {
+        this.budget = budget;
+      },
+      // if budget does not exist
+      err => {
+        this.budget = { userEmail: this.user.email };
+      }
+    );
   }
 
   updateBudget(): void {
     if (this.budget.budgetCategories) {
+      // budget categories do exist, check if category already there
+      let catExists = null;
+      this.budget.budgetCategories.forEach(category => {
+        if (this.budgetForm.get('categoryName').value === category.categoryName) {
+          catExists = category;
+        }
+      });
+      // if category already there, replace it
+      if (catExists) {
+        this.removeAtIndex(this.budget.budgetCategories.indexOf(catExists));
+      }
       this.budget.budgetCategories.push( {
         categoryName: this.budgetForm.get('categoryName').value,
         amount: this.budgetForm.get('amount').value,
@@ -45,7 +65,7 @@ export class BudgetCreatorComponent implements OnInit {
         colour: this.budgetForm.get('colour').value
       }];
     }
-    this.budgetForm.reset();
+    this.budgetForm.reset({categoryName: '', amount: '', colour: '#00008B'});
   }
 
   saveBudget(): void {
@@ -53,5 +73,9 @@ export class BudgetCreatorComponent implements OnInit {
       res => { console.log(res); },
       err => { console.log(err); }
     );
+  }
+
+  removeAtIndex(index: number): void {
+    this.budget.budgetCategories.splice(index, 1);
   }
 }
