@@ -1,4 +1,6 @@
+import { Category } from './category';
+
 export interface Budget {
     userEmail: string;
-    budgetCategories?: { categoryName: string, amount: number, colour: string }[];
+    budgetCategories?: Category[];
 }
