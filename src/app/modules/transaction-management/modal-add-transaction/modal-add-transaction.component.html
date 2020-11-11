@@ -2,34 +2,34 @@
     <h4 class="modal-title">Add transaction</h4>
 </div>
 <div class="modal-body">
-    <form [formGroup]="transForm">
+    <form [formGroup]="transForm" (ngSubmit)="saveTransaction()">
         <div class="row">
             <div class="col-sm-12 col-md-6">
-                <input type="text" class="form-control" placeholder="Account name">
+                <input type="text" class="form-control" placeholder="Account name" formControlName="accountName">
             </div>
             <div class="col-sm-12 col-md-6">
-                <input type="text" class="form-control">
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-sm-12 col-md-6">
-                <input type="text" class="form-control">
-            </div>
-            <div class="col-sm-12 col-md-6">
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" placeholder="Payee" formControlName="payee">
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-sm-12 col-md-6">
-                <input type="text" class="form-control">
+                <input type="number" class="form-control text-right" placeholder="0.00" formControlName="amount">
             </div>
             <div class="col-sm-12 col-md-6">
-                <input type="text" class="form-control">
+                <input type="date" class="form-control" formControlName="date">
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-sm-12 col-md-6">
-                <input type="text" class="form-control">
+                <input type="text" class="form-control" placeholder="Type" formControlName="type">
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <input type="text" class="form-control" value="Uncategorized" formControlName="category">
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-sm-12">
+                <button type="submit" class="btn btn-block btn-success" [disabled]="!transForm.valid">Add transaction</button>
             </div>
         </div>
     </form>

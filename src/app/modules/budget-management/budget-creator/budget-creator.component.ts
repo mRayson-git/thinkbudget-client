@@ -28,55 +28,53 @@ export class BudgetCreatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.getCurrUser();
+    this.budgetService.getBudget(this.user.email).subscribe(
+      // if budget exists
+      budget => {
+        this.budget = budget;
+        // make sure that the budget categories section is pushable
+        if (!this.budget.budgetCategories && !this.budget.categories) {
+          this.budget.budgetCategories = [];
+          this.budget.categories = [];
+        }
+        this.updateFilters();
+      },
+      // if budget does not exist
+      err => {
+        this.budget = { userEmail: this.user.email, budgetCategories: [], categories: [] };
+      }
+    );
     this.budgetForm = this.fb.group({
       categoryName: ['', Validators.required],
       type: ['', Validators.required],
       amount: ['', Validators.required],
       colour: ['#00008B', Validators.required]
     });
-    this.budgetService.getBudget(this.user.email).subscribe(
-      // if budget exists
-      budget => {
-        this.budget = budget;
-        this.updateFilters();
-      },
-      // if budget does not exist
-      err => {
-        this.budget = { userEmail: this.user.email };
-      }
-    );
   }
 
   updateBudget(): void {
-    if (this.budget.budgetCategories) {
-      // budget categories do exist, check if category already there
-      let catExists = null;
-      this.budget.budgetCategories.forEach(category => {
-        if (this.budgetForm.get('categoryName').value === category.categoryName) {
-          catExists = category;
-        }
-      });
-      // if category already there, replace it
-      if (catExists) {
-        this.removeCategory(catExists);
+    // Check if category already there
+    let catExists = null;
+    this.budget.budgetCategories.forEach(category => {
+      if (this.budgetForm.get('categoryName').value === category.categoryName) {
+        catExists = category;
       }
-      this.budget.budgetCategories.push( {
-        categoryName: this.budgetForm.get('categoryName').value,
-        type: this.budgetForm.get('type').value,
-        amount: this.budgetForm.get('amount').value,
-        colour: this.budgetForm.get('colour').value
-      });
-    } else {
-      this.budget.budgetCategories = [{
-        categoryName: this.budgetForm.get('categoryName').value,
-        type: this.budgetForm.get('type').value,
-        amount: this.budgetForm.get('amount').value,
-        colour: this.budgetForm.get('colour').value
-      }];
+    });
+    // if category already there, replace it
+    if (catExists) {
+      this.removeCategory(catExists);
     }
+    // Save information to the budget locally
+    this.budget.budgetCategories.push( {
+      categoryName: this.budgetForm.get('categoryName').value,
+      type: this.budgetForm.get('type').value,
+      amount: this.budgetForm.get('amount').value,
+      colour: this.budgetForm.get('colour').value
+    });
+    this.budget.categories.push(this.budgetForm.get('categoryName').value);
+    this.budget.categories.sort();
+    // Update filters and reset the form
     this.updateFilters();
-    console.log(this.budget);
-    console.log(this.budgetWants);
     this.budgetForm.reset({categoryName: '', amount: '', colour: '#00008B'});
   }
 

@@ -25,8 +25,9 @@ export class TransactionService {
   constructor(private http: HttpClient) { }
 
   // Save transactions and update observable
-  saveTransactions(userEmail: string, transactions: Transaction[]): void{
+  saveTransactions(userEmail: string, transactions: Transaction[]): void {
     // returning array of new transactions added
+    console.log(transactions);
     this.http.post<Transaction[]>(this.baseUrl + userEmail, transactions).subscribe(
       newTransactions => {
         newTransactions.forEach(transaction => {
@@ -50,6 +51,29 @@ export class TransactionService {
       err => {
         console.error(err);
       }
+    );
+  }
+
+  updateTransaction(transId: string, transaction: Transaction): void {
+    console.log('Updated transaction');
+    this.http.put(this.baseUrl + transId, transaction).subscribe(
+      res => { console.log(res); },
+      err => { console.log(err); }
+    );
+  }
+
+  setCategoryForAll(userEmail: string, payee: string, category: string): void {
+    console.log('Setting category for all payee: ' + payee);
+    this.http.put(this.baseUrl + 'updateCategories/' + userEmail, { payee, category } ).subscribe(
+      res => { console.log(res); },
+      err => { console.log(err); }
+    );
+  }
+
+  setCategory(transaction: Transaction): void {
+    this.http.put(this.baseUrl + 'updatecategory', transaction).subscribe(
+      res => { console.log(res); },
+      err => { console.log(err); }
     );
   }
 }

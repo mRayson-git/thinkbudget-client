@@ -6,5 +6,7 @@ export interface Transaction {
     payee: string;
     type: string;
     description?: string;
+    note?: string;
     category?: string;
+    _id?: string;
 }

@@ -1,8 +1,76 @@
-<div class="card mt-3">
-    <div class="card-header">
-        <h4>Set your categories</h4>
+<div *ngIf="budget">
+    <h1 class="display-4 mt-3">Category Setter</h1>
+    <p class="text-muted">Set your categories here.</p>
+    <form [formGroup]="categoryForm" (ngSubmit)="saveChanges()">
+        <div class="form-row">
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                    <label>Payee</label>
+                    <select formControlName="payee" class="form-control form-control-lg">
+                        <option value="" class="text-muted">Select a payee</option>
+                        <option *ngFor="let payee of payees; let i = index" [value]="i">{{ payee }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+                <div class="form-group">
+                    <label>Category</label>
+                    <select formControlName="category" class="form-control form-control-lg">
+                        <option value="" class="text-muted">Select a category</option>
+                        <option *ngFor="let category of budget.categories">{{ category }}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-success btn-block btn-lg">Set category</button>
+        </div>
+    </form>
+    <hr class="my-3">
+    <div class="card">
+        <div class="card-header">
+            <h4>Add a new category</h4>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="newCatForm" (ngSubmit)="addCategory()">
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <input type="text" formControlName="category" class="form-control form-control-lg" placeholder="Other">
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block btn-lg btn-success">Add category to list</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="card-body">
-        
-    </div>
+    <hr class="my-3">
+    <div class="card">
+        <div class="card-header">
+            <h4>Delete a category</h4>
+        </div>
+        <div class="card-body">
+            <form [formGroup]="delCatForm" (ngSubmit)="delCategory()">
+                <div class="form-row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <select formControlName="category" class="form-control form-control-lg">
+                                <option value="" class="text-muted">Select a category</option>
+                                <option *ngFor="let category of budget.categories">{{ category }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block btn-lg btn-danger">Delete a category</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>    
 </div>

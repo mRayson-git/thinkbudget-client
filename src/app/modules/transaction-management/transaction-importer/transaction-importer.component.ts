@@ -96,5 +96,6 @@ export class TransactionImporterComponent implements OnInit {
   // modal for adding custom transaction
   showCustomTransactionModal(): void {
     const modalRef = this.modalService.open(ModalAddTransactionComponent);
+    modalRef.componentInstance.user = this.currUser;
   }
 }

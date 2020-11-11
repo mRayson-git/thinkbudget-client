@@ -8,6 +8,7 @@ import { User } from 'src/app/modules/shared/models/user';
 import { TransactionService } from '../transaction.service';
 import { UserService } from 'src/app/modules/login/user.service';
 import { ModalRecordComponent } from '../modal-record/modal-record.component';
+import { skip } from 'rxjs/operators';
 
 @Component({
   selector: 'app-transaction-list',
