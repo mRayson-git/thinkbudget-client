@@ -19,6 +19,9 @@ export class TransactionService {
   private transactionSource = new Subject<Transaction>();
   transactions$ = this.transactionSource.asObservable();
 
+  private transactionTimeframeSource = new Subject<Transaction>();
+  transactionsTimeframe$ = this.transactionTimeframeSource.asObservable();
+
   private recentlyAdded = new BehaviorSubject<Transaction>(this.initTransaction);
   recentlyAddedTransactions$ = this.recentlyAdded.asObservable();
 
@@ -27,7 +30,6 @@ export class TransactionService {
   // Save transactions and update observable
   saveTransactions(userEmail: string, transactions: Transaction[]): void {
     // returning array of new transactions added
-    console.log(transactions);
     this.http.post<Transaction[]>(this.baseUrl + userEmail, transactions).subscribe(
       newTransactions => {
         newTransactions.forEach(transaction => {
@@ -74,6 +76,20 @@ export class TransactionService {
     this.http.put(this.baseUrl + 'updatecategory', transaction).subscribe(
       res => { console.log(res); },
       err => { console.log(err); }
+    );
+  }
+
+  getTransactionsForTimeframe(userEmail: string, timeframe: string): void {
+    console.log('Getting the transactions for: ' + timeframe);
+    this.http.get<Transaction[]>(this.baseUrl + userEmail + '/' + timeframe).subscribe(
+      transactions => {
+        transactions.forEach(transaction => {
+          this.transactionTimeframeSource.next(transaction);
+        });
+      },
+      err => {
+        console.error(err);
+      }
     );
   }
 }

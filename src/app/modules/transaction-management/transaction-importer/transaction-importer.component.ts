@@ -71,10 +71,12 @@ export class TransactionImporterComponent implements OnInit {
         result.shift();
       }
       result.forEach(transaction => {
+        const isoDate = new Date(transaction[selectedProfile.dateCol]);
+        // console.log(isoDate.toISOString());
         transactions.push({
           userEmail: this.currUser.email,
           accountName: selectedProfile.accountName,
-          date: transaction[selectedProfile.dateCol],
+          date: isoDate.toISOString(),
           amount: transaction[selectedProfile.amountCol],
           payee: transaction[selectedProfile.payeeCol] || '???',
           type: transaction[selectedProfile.typeCol],
@@ -85,6 +87,8 @@ export class TransactionImporterComponent implements OnInit {
       this.transactionService.saveTransactions(this.currUser.email, transactions);
     });
     this.csvForm.get('file').reset();
+    this.transactionService.transactions$ = null;
+    this.transactionService.getTransactions(this.currUser.email);
   }
 
   // modal for seeing recently added transactions

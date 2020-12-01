@@ -16,16 +16,22 @@
                         <th>Payee</th>
                         <th>Type</th>
                         <th>Category</th>
+                        <th>Notes</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let trans of transactions" (click)="showModal(trans)" [ngStyle]="{ 'background-color': trans.note? '#fbff94' : '' }">
+                    <tr *ngFor="let trans of transactions" (click)="showModal(trans)">
                         <td>{{ trans.accountName }}</td>
                         <td>{{ trans.date | date }}</td>
                         <td class="text-right">{{ trans.amount | currency }}</td>
                         <td>{{ trans.payee }}</td>
                         <td>{{ trans.type }}</td>
                         <td>{{ trans.category }}</td>
+                        <td class="d-flex justify-content-center">
+                            <svg class="bi" width="24" height="24" fill="currentColor" *ngIf="trans.note">
+                                <use xlink:href="assets/icons/bootstrap-icons.svg#sticky"/>
+                            </svg>
+                        </td>
                     </tr>
                 </tbody>
             </table>

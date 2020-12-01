@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +29,9 @@ import { BudgetManagementModule } from './modules/budget-management/budget-manag
     TransactionManagementModule,
     AccountManagementModule,
     BudgetManagementModule,
+    NgxEchartsModule.forRoot({
+      echarts: () => import('echarts')
+    }),
     NgbModule
   ],
   providers: [

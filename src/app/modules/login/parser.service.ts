@@ -14,8 +14,8 @@ export class ParserService {
     return this.http.post(this.baseUrl, parserProfile);
   }
 
-  getProfiles(userEmail: string): Observable<any> {
+  getProfiles(userEmail: string): Observable<ParserProfile[]> {
     console.log('Getting profiles for: ' + userEmail);
-    return this.http.get(this.baseUrl + userEmail);
+    return this.http.get<ParserProfile[]>(this.baseUrl + userEmail);
   }
 }
